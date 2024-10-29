@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet" />
+    <title>Ajuda - Simulador de Custo Online</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #E8F1F5;
+        color: #333;
+      }
+
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      #container {
+        width: 100%;
+        max-width: 800px;
+        background-color: #FFFFFF;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px 40px;
+        color: #054055;
+        overflow-y: auto;
+        max-height: 90vh;
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #054055;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+        color: #333;
+        font-weight: 500;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .faq {
+        margin-top: 20px;
+      }
+
+      .faq-item {
+        margin-bottom: 20px;
+      }
+
+      .faq-item h3 {
+        font-size: 18px;
+        font-weight: 500;
+        color: #054055;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .faq-item h3:hover {
+        color: #2D6B8A;
+      }
+
+      .faq-item p {
+        display: none;
+        font-size: 16px;
+        padding: 10px 0;
+      }
+
+      .back-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background-color: #48A0C4;
+        color: white;
+        border-radius: 25px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      .back-button:hover {
+        background-color: #2D6B8A;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background" id="background"></div>
+
+    <div id="container">
+      <h1>Ajuda e Perguntas Frequentes</h1>
+
+      <p>Bem-vindo à página de ajuda do Simulador de Custo Online! Aqui você encontra respostas para dúvidas comuns e orientações sobre o uso do simulador.</p>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>1. Como inserir os dados corretamente?</h3>
+          <p>Para inserir os dados, preencha todos os campos obrigatórios, como o <strong>Preço de Venda</strong>, <strong>Percentual de Desconto</strong>, <strong>Custo do Produto</strong>, entre outros. Certifique-se de que os valores são positivos e numéricos.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>2. O que é o “Percentual de Desconto”?</h3>
+          <p>O “Percentual de Desconto” se refere ao percentual de desconto que você deseja aplicar sobre o preço de venda do produto. Este valor será usado para calcular o preço final com desconto.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>3. Como o frete é calculado?</h3>
+          <p>O frete é calculado com base no peso do produto e no tipo de plano de desconto de frete escolhido. Quanto maior o peso, maior o custo do frete. Caso o produto tenha um plano de desconto, o valor do frete será reduzido proporcionalmente.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>4. O que são “Outros Custos”?</h3>
+          <p>“Outros Custos” incluem quaisquer custos adicionais, como despesas com embalagem, marketing, entre outros. Esse valor será subtraído do lucro final.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>5. Como o lucro é calculado?</h3>
+          <p>O lucro é calculado subtraindo o custo do produto, os outros custos e o frete do preço de venda com desconto. O percentual de lucro é apresentado com base no preço de venda com desconto.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>6. Posso exportar os resultados do histórico?</h3>
+          <p>Sim, você pode exportar o histórico de cálculos para um arquivo Excel clicando no botão "Exportar para Excel" na tela do histórico.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>7. Como limpar o histórico de cálculos?</h3>
+          <p>Para limpar o histórico, você pode selecionar os itens desejados e clicar no botão "Apagar Selecionados".</p>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-button"> Ir ao Simulador</a>
+    </div>
+
+    <script>
+      document.querySelectorAll('.faq-item h3').forEach(item => {
+        item.addEventListener('click', () => {
+          const answer = item.nextElementSibling;
+          const isVisible = answer.style.display === 'block';
+          answer.style.display = isVisible ? 'none' : 'block';
+        });
+      });
+    </script>
+  </body>
+</html>

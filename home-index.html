@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <title>Pequeno Gestor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #E8F1F5;
+      overflow-y: auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #054055;
+      padding: 20px 10%;
+      width: 100%;
+    }
+    header h1 {
+      font-size: 24px;
+      color: #FFFFFF;
+    }
+    header nav a {
+      margin: 0 15px;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .intro {
+      background-color: #FFFFFF;
+      padding: 30px 40px;
+      margin: 30px auto;
+      border-radius: 15px;
+      max-width: 800px;
+      text-align: center;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      color: #054055;
+      line-height: 1.6;
+      width: 90%;
+    }
+    .intro h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .intro p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .intro .simulator-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      background-color: #0f4c64;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+    .intro .simulator-btn:hover {
+      background-color: #051e2b;
+      transform: scale(1.05);
+    }
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .wave {
+      position: absolute;
+      width: 1200px;
+      height: 1200px;
+      background: radial-gradient(circle, #48A0C4 25%, transparent 70%);
+      opacity: 0.6;
+      animation: waveAnimation 6s infinite linear;
+      border-radius: 50%;
+    }
+    .wave:nth-child(1) {
+      top: -200px;
+      left: -200px;
+      animation-duration: 7s;
+    }
+    .wave:nth-child(2) {
+      top: 200px;
+      right: -200px;
+      animation-duration: 10s;
+    }
+    .wave:nth-child(3) {
+      bottom: -200px;
+      left: -200px;
+      animation-duration: 12s;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      gap: 30px;
+      width: 100%;
+      padding: 0 10%;
+    }
+    .marketplace {
+      text-align: center;
+      color: #054055;
+      width: 100%;
+    }
+    .marketplace h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .marketplace button {
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      margin: 10px auto;
+      padding: 15px;
+      border: none;
+      border-radius: 25px;
+      background-color: #0f506a;
+      color: #FFFFFF;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+    .marketplace button:hover {
+      background-color: #05212f;
+      transform: scale(1.05);
+    }
+    .form-container {
+      background-color: #054055;
+      border-radius: 15px;
+      padding: 40px;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+      color: #FFFFFF;
+    }
+    .form-container h3 {
+      font-size: 22px;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      outline: none;
+    }
+    .form-container input[type="nome"], .form-container input[type="email"], .form-container input[type="number"], .form-container input[type="tel"] {
+      background-color: #ffffff;
+      color: #333;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #48A0C4;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+    .form-container button:hover {
+      background-color: #2D6B8A;
+      transform: scale(1.05);
+    }
+    /* Animações */
+    @keyframes waveAnimation {
+      0% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.1) translateY(10px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+    /* Responsividade */
+    @media (max-width: 768px) {
+      header {
+        padding: 20px 5%;
+      }
+      .intro {
+        padding: 20px;
+      }
+      .container {
+        padding: 0 5%;
+      }
+      .form-container {
+        padding: 20px;
+      }
+      .intro h2, .marketplace h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pequeno Gestor</h1>
+    <nav>
+      <a href="#">Fale Conosco</a>
+      <a href="#">Sobre Nós</a>
+      <a href="help-index.html">Ajuda</a>
+    </nav>
+  </header>
+
+  <!-- Seção de Introdução -->
+  <div class="intro">
+    <h2>Simulador de Custo</h2>
+    <p>Este é o seu assistente ideal para calcular rapidamente os custos e lucros de seus produtos. Com o Simulador de Custo, você pode ajustar valores de venda, aplicar descontos, adicionar custos extras e calcular automaticamente o lucro final do seu produto. Ele também oferece planos de frete e diferentes tipos de conta para considerar em seus cálculos. Nossa ferramenta ajuda você a otimizar suas margens de lucro e a manter o controle sobre o histórico de cálculos, possibilitando a exportação para Excel para fácil análise.</p>
+  </div>
+
+  <!-- Fundo animado -->
+  <div class="background">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+
+  <div class="container">
+    <div class="marketplace">
+      <h2>Escolha seu Marketplace</h2>
+      <button onclick="window.location.href='index.html'">Mercado Livre</button>
+      <button>Em Breve Mais</button>
+    </div>
+    <div class="form-container">
+      <h3>Fale Conosco</h3>
+      <form>
+        <input type="text" placeholder="Insira seu nome" required />
+        <input type="email" placeholder="Insira seu e-mail" required />
+        <input type="tel" placeholder="Insira número (com DDD)" required />
+        
+        <label for="contato" style="display: block; margin: 10px 0 5px; color: #ffffff;">
+          Preferência de contato:
+        </label>
+        <select id="contato" required style="width: 100%; padding: 10px; border-radius: 5px; background-color: #ffffff; color: #1D3557; font-size: 16px; margin-bottom: 20px;">
+          <option value="email">E-mail</option>
+          <option value="whatsapp">WhatsApp</option>
+        </select>
+      
+        <button type="submit">Enviar</button>
+      </form>
+                  
+    </div>
+  </div>
+</body>
+</html>
