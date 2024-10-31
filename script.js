@@ -7,12 +7,12 @@ localStorage.setItem("historicoCalculos", JSON.stringify(historicoCalculos));
 }
 
 function calcularFrete(precoVenda, peso, planoFrete) {
-  // Se o preço de venda for menor que 79, o frete é fixo
+  // Se o preço de venda for menor que 79, o frete é fixo e sem desconto de plano de frete
   if (precoVenda < 79) {
       return 6; // Frete fixo de R$6,00
   }
 
-  // Array que contém os limites de peso e os respectivos valores de ADS
+  // Array que contém os limites de peso e os respectivos valores de frete
   const faixasFrete = [
       { peso: 0.3, valor: 40.90 },
       { peso: 0.5, valor: 41.90 },
@@ -38,15 +38,16 @@ function calcularFrete(precoVenda, peso, planoFrete) {
       { peso: Infinity, valor: 498.90 } // Para pesos acima de 150
   ];
 
-  // Encontrar o valor do frete com base no peso
-  let frete = faixasFrete.find(faixa => peso <= faixa.peso)?.valor || 498.90;
-
-  // Aplicar desconto no frete baseado no plano de frete
-  if (planoFrete === 'premium') {
-      frete -= (precoVenda * 0.19); // 19% de desconto
-  } else if (planoFrete === 'classico') {
-      frete -= (precoVenda * 0.14); // 14% de desconto
+  // Aplicar desconto na tabela de acordo com o plano de frete
+  let descontoPlano = 1; // Sem desconto por padrão
+  if (planoFrete === 'comum') {
+      descontoPlano = 0.75; // 25% de desconto
+  } else if (planoFrete === 'premium') {
+      descontoPlano = 0.5; // 50% de desconto
   }
+
+  // Encontrar o valor do frete com base no peso e aplicar o desconto do plano
+  let frete = (faixasFrete.find(faixa => peso <= faixa.peso)?.valor || 498.90) * descontoPlano;
 
   // Garantir que o frete não fique negativo
   if (frete < 0) {
