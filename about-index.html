@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <title>Sobre Nós - Pequeno Gestor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #E8F1F5;
+      overflow-y: auto;
+      position: relative;
+    }
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .wave {
+      position: absolute;
+      width: 1200px;
+      height: 1200px;
+      background: radial-gradient(circle, #48A0C4 25%, transparent 70%);
+      opacity: 0.6;
+      border-radius: 50%;
+      animation: waveAnimation 6s infinite linear;
+    }
+    .wave:nth-child(1) {
+      top: -200px;
+      left: -200px;
+      animation-duration: 7s;
+      animation-timing-function: ease-in-out;
+    }
+    .wave:nth-child(2) {
+      top: 200px;
+      right: -200px;
+      animation-duration: 10s;
+      animation-timing-function: ease-in-out;
+    }
+    .wave:nth-child(3) {
+      bottom: -200px;
+      left: -200px;
+      animation-duration: 12s;
+      animation-timing-function: ease-in-out;
+    }
+
+    /* Animação das ondas com escala e rotação */
+    @keyframes waveAnimation {
+      0% { transform: scale(1) rotate(0deg) translateY(0); }
+      25% { transform: scale(1.1) rotate(15deg) translateY(-10px); }
+      50% { transform: scale(1) rotate(30deg) translateY(10px); }
+      75% { transform: scale(1.1) rotate(45deg) translateY(-10px); }
+      100% { transform: scale(1) rotate(60deg) translateY(0); }
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #054055;
+      padding: 20px 10%;
+      width: 100%;
+    }
+    header h1 {
+      font-size: 24px;
+      color: #FFFFFF;
+    }
+    header nav a {
+      margin: 0 15px;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .content {
+      background-color: #FFFFFF;
+      padding: 30px 40px;
+      margin: 30px auto;
+      border-radius: 15px;
+      max-width: 800px;
+      text-align: left;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      color: #054055;
+      line-height: 1.6;
+      width: 90%;
+    }
+    .content h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .content p, .content ul {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .content ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+    .content .simulator-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      background-color: #0f4c64;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s;
+      text-align: center;
+      width: 100%;
+    }
+    .content .simulator-btn:hover {
+      background-color: #051e2b;
+      transform: scale(1.05);
+    }
+    @media (max-width: 768px) {
+      header {
+        padding: 20px 5%;
+      }
+      .content {
+        padding: 20px;
+      }
+      .content h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fundo de ondas animadas -->
+  <div class="background">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+
+  <header>
+    <h1>Pequeno Gestor</h1>
+    <nav>
+      <a href="home-index.html">Página Inicial</a>
+      <a href="about-index.html">Sobre Nós</a>
+      <a href="help-index.html">Ajuda</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <h2>Sobre Nós</h2>
+    <p>O <strong>Pequeno Gestor</strong> é um projeto desenvolvido para facilitar a gestão de custos para pequenos empreendedores que operam em e-commerce, especialmente no Mercado Livre. Conheça mais sobre nosso projeto e objetivos:</p>
+    <ul>
+      <li><strong>Quem Somos</strong>: Somos estudantes do segundo ano da faculdade, apaixonados por tecnologia e inovação.</li>
+      <li><strong>Nosso Objetivo</strong>: Criar uma ferramenta prática e intuitiva que auxilie empreendedores na otimização das margens de lucro e controle financeiro.</li>
+      <li><strong>Como Foi Desenvolvido</strong>: A pesquisa para este protótipo foi feita através de testes práticos, com foco em processos de vendas no Mercado Livre.</li>
+      <li><strong>Em Fase de Desenvolvimento</strong>: Este projeto ainda é um protótipo e continuará a ser aprimorado conforme recebemos mais feedback.<li>
+        
+    </ul>
+    <a href="index.html" class="simulator-btn">Ir ao Simulador</a>
+  </div>
+</body>
+</html>
