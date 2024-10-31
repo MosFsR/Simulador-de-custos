@@ -8,6 +8,34 @@
       rel="stylesheet" />
     <title>Ajuda - Simulador de Custo Online</title>
     <style>
+      /* Estilos do cabeçalho */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #054055;
+        padding: 20px 10%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+      }
+      header h1 {
+        font-size: 26px;
+        color: #FFFFFF;
+        font-weight: 600;
+      }
+      header nav a {
+        margin: 0 15px;
+        color: #FFFFFF;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+      }
+      header nav a:hover {
+        color: #AADF30;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -93,9 +121,16 @@
         padding: 10px 0;
       }
 
-      .back-button {
-        display: inline-block;
+      /* Contêiner para os botões */
+      .button-container {
+        display: flex;
+        gap: 10px; /* Espaçamento entre os botões */
         margin-top: 20px;
+      }
+
+      /* Botão Ir ao Simulador */
+      .back-button {
+        flex: 1;
         padding: 12px 24px;
         background-color: #48A0C4;
         color: white;
@@ -111,9 +146,82 @@
         background-color: #2D6B8A;
         transform: scale(1.05);
       }
+
+      /* Botão de Página Inicial */
+      .button-home {
+        flex: 1;
+        padding: 12px 24px;
+        background-color: #48A0C4;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      .button-home:hover {
+        background-color: #2D6B8A;
+        transform: scale(1.05);
+      }
+
+      /* Fundo de ondas animadas */
+      .wave {
+        position: absolute;
+        width: 1200px;
+        height: 1200px;
+        background: radial-gradient(circle, #48A0C4 25%, transparent 70%);
+        opacity: 0.6;
+        animation: waveAnimation 6s infinite linear;
+        border-radius: 50%;
+      }
+
+      .wave:nth-child(1) {
+        top: -200px;
+        left: -200px;
+        animation-duration: 7s;
+      }
+
+      .wave:nth-child(2) {
+        top: 200px;
+        right: -200px;
+        animation-duration: 10s;
+      }
+
+      .wave:nth-child(3) {
+        bottom: -200px;
+        left: -200px;
+        animation-duration: 12s;
+      }
+
+      /* Animação das ondas */
+      @keyframes waveAnimation {
+        0% { transform: scale(1) translateY(0); }
+        50% { transform: scale(1.1) translateY(10px); }
+        100% { transform: scale(1) translateY(0); }
+      }
     </style>
   </head>
   <body>
+
+    <!-- Fundo de ondas animadas -->
+    <div class="background">
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+
+    <header>
+      <h1 href="home-index.html">Pequeno Gestor</h1>
+      <nav>
+        <a href="home-index.html">Fale Conosco</a>
+        <a href="about-index.html">Sobre Nós</a>
+        <a href="help-index.html">Ajuda</a>
+      </nav>
+    </header>
+
     <div class="background" id="background"></div>
 
     <div id="container">
@@ -122,43 +230,48 @@
       <p>Bem-vindo à página de ajuda do Simulador de Custo Online! Aqui você encontra respostas para dúvidas comuns e orientações sobre o uso do simulador.</p>
 
       <div class="faq">
-        <div class="faq-item">
-          <h3>1. Como inserir os dados corretamente?</h3>
-          <p>Para inserir os dados, preencha todos os campos obrigatórios, como o <strong>Preço de Venda</strong>, <strong>Percentual de Desconto</strong>, <strong>Custo do Produto</strong>, entre outros. Certifique-se de que os valores são positivos e numéricos.</p>
-        </div>
 
-        <div class="faq-item">
-          <h3>2. O que é o “Percentual de Desconto”?</h3>
-          <p>O “Percentual de Desconto” se refere ao percentual de desconto que você deseja aplicar sobre o preço de venda do produto. Este valor será usado para calcular o preço final com desconto.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>3. Como o frete é calculado?</h3>
-          <p>O frete é calculado com base no peso do produto e no tipo de plano de desconto de frete escolhido. Quanto maior o peso, maior o custo do frete. Caso o produto tenha um plano de desconto, o valor do frete será reduzido proporcionalmente.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>4. O que são “Outros Custos”?</h3>
-          <p>“Outros Custos” incluem quaisquer custos adicionais, como despesas com embalagem, marketing, entre outros. Esse valor será subtraído do lucro final.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>5. Como o lucro é calculado?</h3>
-          <p>O lucro é calculado subtraindo o custo do produto, os outros custos e o frete do preço de venda com desconto. O percentual de lucro é apresentado com base no preço de venda com desconto.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>6. Posso exportar os resultados do histórico?</h3>
-          <p>Sim, você pode exportar o histórico de cálculos para um arquivo Excel clicando no botão "Exportar para Excel" na tela do histórico.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>7. Como limpar o histórico de cálculos?</h3>
-          <p>Para limpar o histórico, você pode selecionar os itens desejados e clicar no botão "Apagar Selecionados".</p>
-        </div>
+            <div class="faq-item">
+              <h3>1. Como inserir os dados corretamente?</h3>
+              <p>Para inserir os dados, preencha todos os campos obrigatórios, como o <strong>Preço de Venda</strong>, <strong>Percentual de Desconto</strong>, <strong>Custo do Produto</strong>, entre outros. Certifique-se de que os valores são positivos e numéricos.</p>
+            </div>
+        
+            <div class="faq-item">
+              <h3>2. O que é o “Percentual de Desconto”?</h3>
+              <p>O “Percentual de Desconto” se refere ao percentual de desconto que você deseja aplicar sobre o preço de venda do produto. Este valor será usado para calcular o preço final com desconto.</p>
+            </div>
+        
+            <div class="faq-item">
+              <h3>3. Como o frete é calculado?</h3>
+              <p>O frete é calculado com base no peso do produto e no tipo de plano de desconto de frete escolhido. Quanto maior o peso, maior o custo do frete. Caso o produto tenha um plano de desconto, o valor do frete será reduzido proporcionalmente.</p>
+            </div>
+        
+            <div class="faq-item">
+              <h3>4. O que são “Outros Custos”?</h3>
+              <p>“Outros Custos” incluem quaisquer custos adicionais, como despesas com embalagem, marketing, entre outros. Esse valor será subtraído do lucro final.</p>
+            </div>
+        
+            <div class="faq-item">
+              <h3>5. Como o lucro é calculado?</h3>
+              <p>O lucro é calculado subtraindo o custo do produto, os outros custos e o frete do preço de venda com desconto. O percentual de lucro é apresentado com base no preço de venda com desconto.</p>
+            </div>
+        
+            <div class="faq-item">
+              <h3>6. Posso exportar os resultados do histórico?</h3>
+              <p>Sim, você pode exportar o histórico de cálculos para um arquivo Excel clicando no botão "Exportar para Excel" na tela do histórico.</p>
+            </div>
+        
+            <div class="faq-item">
+              <h3>7. Como limpar o histórico de cálculos?</h3>
+              <p>Para limpar o histórico, você pode selecionar os itens desejados e clicar no botão "Apagar Selecionados".</p>
+            </div>
       </div>
 
-      <a href="index.html" class="back-button"> Ir ao Simulador</a>
+      <!-- Contêiner para os botões -->
+      <div class="button-container">
+        <a href="index.html" class="back-button">Ir ao Simulador</a>
+        <button class="button-home" onclick="voltarHome()">Voltar à página Inicial</button>
+      </div>
     </div>
 
     <script>
@@ -169,6 +282,10 @@
           answer.style.display = isVisible ? 'none' : 'block';
         });
       });
+
+      function voltarHome() {
+        window.location.href = 'home-index.html'; // Redirecionar à página inicial
+      }
     </script>
   </body>
 </html>
