@@ -38,13 +38,15 @@ function calcularFrete(precoVenda, peso, planoFrete) {
       { peso: Infinity, valor: 498.90 } // Para pesos acima de 150
   ];
 
-  // Aplicar desconto na tabela de acordo com o plano de frete
-  let descontoPlano = 1; // Sem desconto por padrão
-  if (planoFrete === 'comum') {
-      descontoPlano = 0.75; // 25% de desconto
-  } else if (planoFrete === 'premium') {
-      descontoPlano = 0.5; // 50% de desconto
-  }
+  // Variável de desconto com valor padrão (sem desconto)
+  let descontoPlano = 1;
+
+  // Verificar o tipo de plano para aplicar o desconto
+  if (planoFrete === 'Líder 25%') {
+    descontoPlano = 0.75; // 25% de desconto
+} else if (planoFrete === 'Líder 50%') {
+    descontoPlano = 0.5; // 50% de desconto
+}
 
   // Encontrar o valor do frete com base no peso e aplicar o desconto do plano
   let frete = (faixasFrete.find(faixa => peso <= faixa.peso)?.valor || 498.90) * descontoPlano;
@@ -87,7 +89,7 @@ function calcularLucro() {
   const custoProduto = parseFloat(document.getElementById("custoProduto").value);
   const outrosCustos = parseFloat(document.getElementById("outrosCustos").value);
   const tipoConta = document.getElementById("tipoConta").value;
-  const planoFrete = parseInt(document.getElementById("planoFrete").value, 10);
+  const planoFrete = document.getElementById("planoFrete").value;
   const peso = parseFloat(document.getElementById("peso").value);
 
   const precoComDesconto = precoVenda * (1 - desconto / 100);
