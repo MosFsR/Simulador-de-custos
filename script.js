@@ -94,10 +94,37 @@ function calcularLucro() {
 
   const precoComDesconto = precoVenda * (1 - desconto / 100);
   const frete = calcularFrete(precoComDesconto, peso, planoFrete);
-  let percentualLucro = ((precoComDesconto - custoProduto - outrosCustos - frete) / precoComDesconto) * 100;
   let lucro = precoComDesconto - custoProduto - outrosCustos - frete;
- // Define a cor com base no valor do lucro
- const corLucro = lucro >= 0 ? "green" : "red";
+
+    // Aplicar o desconto de lucro baseado no tipo de conta
+    if (tipoConta === "Comum") {
+      lucro *= 0.81; // Reduz o lucro em 19%
+  } else if (tipoConta === "Premium") {
+      lucro *= 0.84; // Reduz o lucro em 16%
+  }
+
+  let percentualLucro = (lucro / precoComDesconto) * 100;
+  
+  // Define a cor com base no valor do lucro
+  const corLucro = lucro >= 0 ? "green" : "red";
+
+  document.getElementById("resultado").innerHTML = `
+    <strong>Produto:</strong> ${nomeProduto}<br />
+    <strong>Preço de Venda:</strong> R$${precoVenda.toFixed(2)}<br />
+    <strong>Desconto Aplicado:</strong> ${desconto}%<br />
+    <strong>Preço com Desconto:</strong> R$${precoComDesconto.toFixed(2)}<br />
+    <strong>Frete:</strong> R$${frete.toFixed(2)}<br />
+    <strong style="font-size: 1.5em; color: ${corLucro};">Lucro:</strong> 
+    <strong style="font-size: 1.5em; color: ${corLucro};">R$${lucro.toFixed(2)}</strong> 
+    (${percentualLucro.toFixed(2)}%)
+  `;
+
+  historicoCalculos.push({
+      nomeProduto, precoVenda, desconto, custoProduto, outrosCustos, tipoConta, planoFrete, peso, precoComDesconto, frete, lucro, percentualLucro
+  });
+
+  salvarHistorico();
+}
 
  document.getElementById("resultado").innerHTML = `
    <strong>Produto:</strong> ${nomeProduto}<br />
@@ -115,11 +142,24 @@ function calcularLucro() {
  });
 
  salvarHistorico();
-}
 
 function mostrarHistorico() {
 const historicoContainer = document.getElementById("historico");
-document.getElementById("container").style.display = "none";
+const container = document.getElementById("container");
+const historicoView = document.getElementById("historicoView");
+
+ // Adiciona a classe fade-out para esconder o simulador
+  container.classList.add("fade-out");
+
+    // Após a animação de fade-out, oculta o simulador e mostra o histórico
+    setTimeout(() => {
+      container.style.display = "none"; // Oculta o container do simulador
+      container.classList.remove("fade-out"); // Remove a classe fade-out após ocultar
+      historicoView.style.display = "block"; // Exibe o container do histórico
+      historicoView.classList.add("fade-in"); // Animação de fade-in no histórico
+    }, 300); // Tempo da animação de fade-out (0.3s)
+
+    //Dados dos cálculos que serão inseridos no histórico
 historicoContainer.innerHTML = historicoCalculos.map((calculo, index) => `
   <div class="history-item">
     <input type="checkbox" class="selecionarCalculo" data-index="${index}">
@@ -133,12 +173,32 @@ document.getElementById("simulador").style.display = "none";
 document.getElementById("historicoView").style.display = "block";
 }
 
+// Função voltar ao simulador
 function voltarAoSimulador() {
 document.getElementById("container").style.display = "block";
 document.getElementById("historicoView").style.display = "none";
 document.getElementById("simulador").style.display = "block";
+const container = document.getElementById("container");
+const historicoView = document.getElementById("historicoView");
+
+  // Adiciona a classe fade-out para esconder o histórico
+  historicoView.classList.add("fade-out");
+
+  // Após a animação de fade-out, oculta o histórico e mostra o simulador
+  setTimeout(() => {
+    historicoView.style.display = "none"; // Oculta o histórico
+    historicoView.classList.remove("fade-out"); // Remove a classe fade-out após ocultar
+    container.style.display = "block"; // Exibe o container do simulador
+    container.classList.add("fade-in"); // Animação de fade-in no simulador
+  }, 300); // Tempo da animação de fade-out (0.3s)
+
+  // Remove a classe fade-in do simulador após a animação
+  setTimeout(() => {
+    container.classList.remove("fade-in");
+  }, 600); // Tempo total (fade-out + fade-in) para garantir a remoção correta
 }
 
+// Função para exportar histórico para excel
 function exportarParaExcel() {
 const worksheet = XLSX.utils.json_to_sheet(historicoCalculos);
 const workbook = XLSX.utils.book_new();
@@ -146,6 +206,7 @@ XLSX.utils.book_append_sheet(workbook, worksheet, "Histórico");
 XLSX.writeFile(workbook, "Historico_Calculos.xlsx");
 }
 
+//Função para apagar cálculos selecionados do histórico
 function apagarSelecionados() {
 const checkboxes = document.querySelectorAll(".selecionarCalculo:checked");
 const indicesParaRemover = Array.from(checkboxes).map(checkbox => parseInt(checkbox.dataset.index));
