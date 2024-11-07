@@ -6,7 +6,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
   <title>Simulador de Custo Online</title>
   
   <style>
@@ -40,8 +42,9 @@ header {
   z-index: 1000;
 }
 header h1 {
-  font-size: 22px;
+  font-size: 43px;
   color: #FFFFFF;
+  text-align: center;
   font-weight: 600;
 }
 header nav a {
@@ -181,7 +184,7 @@ animation-duration: 17s, 28s, 38s;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 40px 20px;
-  text-align: center;
+  text-align: left;
   color: #054055;
   max-height: 90vh;
   overflow-y: auto;
@@ -191,6 +194,7 @@ animation-duration: 17s, 28s, 38s;
 h1 {
   font-size: 28px;
   color: #054055;
+  text-align: center;
   margin-bottom: 20px;
   font-weight: 600;
 }
@@ -246,7 +250,6 @@ select {
 
 /* Estilo para aba e conteúdo do histórico */
 #historicoTab {
-  position: fixed;
   top: 20px;
   left: 20px;
   background-color: #48A0C4;
@@ -309,23 +312,24 @@ select {
     margin-top: 10px;
   }
 
-/* Animações de fade-in e fade-out */
-.fade-in {
-animation: fadeIn 0.3s ease-in forwards;
+/* Animação de deslizar para a esquerda */
+@keyframes deslizarEsquerda {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
-.fade-out {
-animation: fadeOut 0.3s ease-out forwards;
+/* Animação de deslizar para a direita */
+@keyframes deslizarDireita {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
+.fade-in-slide {
+  animation: deslizarEsquerda 0.5s ease-out;
 }
 
-@keyframes fadeOut {
-from { opacity: 1; }
-to { opacity: 0; }
+.fade-out-slide {
+  animation: deslizarDireita 0.5s ease-out;
 }
 
 /* Posicionamento do link de legislação */
@@ -364,6 +368,30 @@ box-shadow: 0px 0px 8px 3px rgba(255, 255, 255, 0.5); /* Brilho */
   transform: translateY(0);
 }
 }
+
+
+/* animações do campo de erro*/
+.campoErroAnimacao {
+  animation: shake 0.8s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+.fade-out-slide {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.fade-in-slide {
+  opacity: 1;
+  transition: opacity 0.8s ease-in;
+}
+
 </style>
 
 </head>
@@ -377,14 +405,16 @@ box-shadow: 0px 0px 8px 3px rgba(255, 255, 255, 0.5); /* Brilho */
   </div>
 
   <header>
+
+    <!-- botão para acessar o histórico-->
+    <div id="historicoTab" onclick="mostrarHistorico()">Histórico</div>  
+
     <h1>Pequeno Gestor</h1>
     <nav>
       <a href="home-index.html">Fale Conosco</a>
       <a href="about-index.html">Sobre Nós</a>
       <a href="help-index.html">Ajuda</a>
     </nav>
-    <!-- Aba do Histórico -->
-    <div id="historicoTab" onclick="mostrarHistorico()">Histórico</div>
   </header>
   
   <!-- Tela do Histórico -->
@@ -453,4 +483,4 @@ box-shadow: 0px 0px 8px 3px rgba(255, 255, 255, 0.5); /* Brilho */
 
   <script src="script.js"></script>
 </body>
-</html>;
+</html>
