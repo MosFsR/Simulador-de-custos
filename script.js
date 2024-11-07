@@ -1,4 +1,3 @@
-
 // Carregar o histórico de cálculos armazenado no localStorage
 let historicoCalculos = JSON.parse(localStorage.getItem("historicoCalculos")) || [];
 
@@ -59,20 +58,55 @@ function calcularFrete(precoVenda, peso, planoFrete) {
   return frete;
 }
 
+function adicionarErroCampo(campo, mensagem) {
+  campo.style.border = "2px solid red";  // Adiciona a borda vermelha
+  campo.classList.add("campoErroAnimacao"); // Classe CSS para animação
+  setTimeout(() => campo.classList.remove("campoErroAnimacao"), 1000); // Remove o destaque após 1s
+  const erroDiv = document.createElement("div");
+  erroDiv.classList.add("erroMensagem");
+  erroDiv.style.color = "red";
+  erroDiv.innerText = mensagem;
+  campo.parentElement.appendChild(erroDiv); // Adiciona a mensagem de erro abaixo do campo
+}
+
+function limparErros() {
+  const campos = document.querySelectorAll(".erroMensagem");
+  campos.forEach(erro => erro.remove());  // Remove mensagens de erro
+  const inputs = document.querySelectorAll("input, select");
+  inputs.forEach(input => input.style.border = "");  // Remove borda vermelha
+}
+
 function validarEntradas() {
-const precoVenda = parseFloat(document.getElementById("precoVenda").value);
-const desconto = parseFloat(document.getElementById("desconto").value);
-const custoProduto = parseFloat(document.getElementById("custoProduto").value);
-const outrosCustos = parseFloat(document.getElementById("outrosCustos").value);
-const peso = parseFloat(document.getElementById("peso").value);
+  limparErros(); // Limpar erros anteriores
+  
+  const precoVenda = parseFloat(document.getElementById("precoVenda").value);
+  const desconto = parseFloat(document.getElementById("desconto").value);
+  const custoProduto = parseFloat(document.getElementById("custoProduto").value);
+  const outrosCustos = parseFloat(document.getElementById("outrosCustos").value);
+  const peso = parseFloat(document.getElementById("peso").value);
 
-if (isNaN(precoVenda) || precoVenda <= 0) return "Erro: Preço de venda inválido.";
-if (isNaN(desconto) || desconto < 0) return "Erro: Desconto inválido.";
-if (isNaN(custoProduto) || custoProduto < 0) return "Erro: Custo do produto inválido.";
-if (isNaN(outrosCustos) || outrosCustos < 0) return "Erro: Outros custos inválidos.";
-if (isNaN(peso) || peso <= 0) return "Erro: Peso da mercadoria inválido.";
+  if (isNaN(precoVenda) || precoVenda <= 0) {
+    adicionarErroCampo(document.getElementById("precoVenda"), "Erro: Preço de venda inválido.");
+    return "Erro: Preço de venda inválido.";
+  }
+  if (isNaN(desconto) || desconto < 0) {
+    adicionarErroCampo(document.getElementById("desconto"), "Erro: Desconto inválido.");
+    return "Erro: Desconto inválido.";
+  }
+  if (isNaN(custoProduto) || custoProduto < 0) {
+    adicionarErroCampo(document.getElementById("custoProduto"), "Erro: Custo do produto inválido.");
+    return "Erro: Custo do produto inválido.";
+  }
+  if (isNaN(outrosCustos) || outrosCustos < 0) {
+    adicionarErroCampo(document.getElementById("outrosCustos"), "Erro: Outros custos inválidos.");
+    return "Erro: Outros custos inválidos.";
+  }
+  if (isNaN(peso) || peso <= -1) {
+    adicionarErroCampo(document.getElementById("peso"), "Erro: Peso da mercadoria inválido.");
+    return "Erro: Peso da mercadoria inválido.";
+  }
 
-return null;
+  return null;
 }
 
 function calcularLucro() {
@@ -98,9 +132,9 @@ function calcularLucro() {
 
     // Aplicar o desconto de lucro baseado no tipo de conta
     if (tipoConta === "Comum") {
-      lucro *= 0.81; // Reduz o lucro em 19%
-  } else if (tipoConta === "Premium") {
       lucro *= 0.84; // Reduz o lucro em 16%
+  } else if (tipoConta === "Premium") {
+      lucro *= 0.81; // Reduz o lucro em 19%
   }
 
   let percentualLucro = (lucro / precoComDesconto) * 100;
@@ -143,59 +177,49 @@ function calcularLucro() {
 
  salvarHistorico();
 
+
+
+
+//função para mostrar o histórico
 function mostrarHistorico() {
-const historicoContainer = document.getElementById("historico");
-const container = document.getElementById("container");
-const historicoView = document.getElementById("historicoView");
+  const historicoContainer = document.getElementById("historico");
+  const container = document.getElementById("container");
+  const historicoView = document.getElementById("historicoView");
 
- // Adiciona a classe fade-out para esconder o simulador
-  container.classList.add("fade-out");
+  setTimeout(() => {
+    container.style.display = "none"; // Esconde o container
+    historicoView.style.display = "block"; // Mostra o histórico
+    historicoView.classList.add("fade-in-slide"); // Aplica a animação de entrada
+  }, 600); // Tempo da animação de deslizar
 
-    // Após a animação de fade-out, oculta o simulador e mostra o histórico
-    setTimeout(() => {
-      container.style.display = "none"; // Oculta o container do simulador
-      container.classList.remove("fade-out"); // Remove a classe fade-out após ocultar
-      historicoView.style.display = "block"; // Exibe o container do histórico
-      historicoView.classList.add("fade-in"); // Animação de fade-in no histórico
-    }, 300); // Tempo da animação de fade-out (0.3s)
-
-    //Dados dos cálculos que serão inseridos no histórico
-historicoContainer.innerHTML = historicoCalculos.map((calculo, index) => `
-  <div class="history-item">
-    <input type="checkbox" class="selecionarCalculo" data-index="${index}">
-    <p><strong>Produto:</strong> ${calculo.nomeProduto}, 
-    <strong>Preço com Desconto:</strong> R$${calculo.precoComDesconto.toFixed(2)}, 
-    <strong>Frete:</strong> R$${calculo.frete.toFixed(2)}, 
-    <strong style="font-size: 1.2em; color: green;"></strong>Lucro:<strong style="font-size: 1.2em; color: green;"></strong> R$${calculo.lucro.toFixed(2)}</p>
-  </div>
-`).join("");
-document.getElementById("simulador").style.display = "none";
-document.getElementById("historicoView").style.display = "block";
+  // Dados dos cálculos que serão inseridos no histórico
+  historicoContainer.innerHTML = historicoCalculos.map((calculo, index) => `
+    <div class="history-item">
+      <input type="checkbox" class="selecionarCalculo" data-index="${index}">
+      <p><strong>Produto:</strong> ${calculo.nomeProduto}, 
+      <strong>Preço com Desconto:</strong> R$${calculo.precoComDesconto.toFixed(2)}, 
+      <strong>Frete:</strong> R$${calculo.frete.toFixed(2)}, 
+      <strong style="font-size: 1.2em; color: green;">Lucro:</strong> R$${calculo.lucro.toFixed(2)}</p>
+    </div>
+  `).join("");
 }
 
-// Função voltar ao simulador
 function voltarAoSimulador() {
-document.getElementById("container").style.display = "block";
-document.getElementById("historicoView").style.display = "none";
-document.getElementById("simulador").style.display = "block";
-const container = document.getElementById("container");
-const historicoView = document.getElementById("historicoView");
+  const container = document.getElementById("container");
+  const historicoView = document.getElementById("historicoView");
 
-  // Adiciona a classe fade-out para esconder o histórico
-  historicoView.classList.add("fade-out");
+  // Remove a animação de entrada do histórico e a oculta
+  historicoView.classList.remove("fade-in-slide");
+  historicoView.style.display = "none";
 
-  // Após a animação de fade-out, oculta o histórico e mostra o simulador
+  // Mostra o simulador novamente com animação de entrada
+  container.style.display = "block";
+  container.classList.add("fade-in-slide");
+
+  // Remove a classe de saída do container para que ela não interfira em próximas animações
   setTimeout(() => {
-    historicoView.style.display = "none"; // Oculta o histórico
-    historicoView.classList.remove("fade-out"); // Remove a classe fade-out após ocultar
-    container.style.display = "block"; // Exibe o container do simulador
-    container.classList.add("fade-in"); // Animação de fade-in no simulador
-  }, 300); // Tempo da animação de fade-out (0.3s)
-
-  // Remove a classe fade-in do simulador após a animação
-  setTimeout(() => {
-    container.classList.remove("fade-in");
-  }, 600); // Tempo total (fade-out + fade-in) para garantir a remoção correta
+    container.classList.remove("fade-in-slide");
+  }, 800); // Tempo da animação de entrada
 }
 
 // Função para exportar histórico para excel
@@ -205,6 +229,7 @@ const workbook = XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(workbook, worksheet, "Histórico");
 XLSX.writeFile(workbook, "Historico_Calculos.xlsx");
 }
+
 
 //Função para apagar cálculos selecionados do histórico
 function apagarSelecionados() {
